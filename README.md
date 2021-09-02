@@ -181,24 +181,15 @@ See also https://kubernetes.io/docs/setup/production-environment/container-runti
 $ sudo mkdir /etc/docker
 mkdir: cannot create directory ‘/etc/docker’: File exists
 $ cat <<EOF | sudo tee /etc/docker/daemon.json
-> {
->   "exec-opts": ["native.cgroupdriver=systemd"],
->   "log-driver": "json-file",
->   "log-opts": {
->     "max-size": "100m"
->   },
->   "storage-driver": "overlay2"
-> }
-> EOF
-{
-  "exec-opts": ["native.cgroupdriver=systemd"],
-  "log-driver": "json-file",
-  "log-opts": {
-    "max-size": "100m"
-  },
-  "storage-driver": "overlay2"
-}
-
+ {
+   "exec-opts": ["native.cgroupdriver=systemd"],
+   "log-driver": "json-file",
+   "log-opts": {
+     "max-size": "100m"
+   },
+   "storage-driver": "overlay2"
+ }\
+ EOF
 
 $ sudo systemctl enable docker
 Synchronizing state of docker.service with SysV service script with /lib/systemd/systemd-sysv-install.
@@ -213,7 +204,7 @@ REPOSITORY   TAG       IMAGE ID   CREATED   SIZE
 ```
 
 # 5. Install kubernetes
-See als https://docs.nvidia.com/datacenter/cloud-native/kubernetes/install-k8s.html .
+See also https://docs.nvidia.com/datacenter/cloud-native/kubernetes/install-k8s.html .
 
 ```
 $ sudo apt-get update \
