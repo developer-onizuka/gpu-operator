@@ -188,15 +188,15 @@ See also https://kubernetes.io/docs/setup/production-environment/container-runti
 $ sudo mkdir /etc/docker
 mkdir: cannot create directory ‘/etc/docker’: File exists
 $ cat <<EOF | sudo tee /etc/docker/daemon.json
- {
-   "exec-opts": ["native.cgroupdriver=systemd"],
-   "log-driver": "json-file",
-   "log-opts": {
-     "max-size": "100m"
-   },
-   "storage-driver": "overlay2"
- }
- EOF
+{
+  "exec-opts": ["native.cgroupdriver=systemd"],
+  "log-driver": "json-file",
+  "log-opts": {
+    "max-size": "100m"
+  },
+  "storage-driver": "overlay2"
+}
+EOF
 
 $ sudo systemctl enable docker
 Synchronizing state of docker.service with SysV service script with /lib/systemd/systemd-sysv-install.
@@ -239,8 +239,8 @@ $ curl -s https://packages.cloud.google.com/apt/doc/apt-key.gpg | sudo apt-key a
 OK
 
 $ cat <<EOF | sudo tee /etc/apt/sources.list.d/kubernetes.list
- deb https://apt.kubernetes.io/ kubernetes-xenial main
- EOF
+deb https://apt.kubernetes.io/ kubernetes-xenial main
+EOF
 
 $ sudo apt-get update \
 >    && sudo apt-get install -y -q kubelet kubectl kubeadm \
