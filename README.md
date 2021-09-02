@@ -188,7 +188,7 @@ $ cat <<EOF | sudo tee /etc/docker/daemon.json
      "max-size": "100m"
    },
    "storage-driver": "overlay2"
- }\
+ }
  EOF
 
 $ sudo systemctl enable docker
@@ -233,7 +233,7 @@ OK
 
 $ cat <<EOF | sudo tee /etc/apt/sources.list.d/kubernetes.list
  deb https://apt.kubernetes.io/ kubernetes-xenial main
-> EOF
+ EOF
 
 $ sudo apt-get update \
 >    && sudo apt-get install -y -q kubelet kubectl kubeadm \
