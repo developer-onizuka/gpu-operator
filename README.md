@@ -2,7 +2,8 @@
 
 # 0. Disable Swapping
 This is very important step. If you skip this step, Kubelet will never run.
-See https://github.com/developer-onizuka/swapoff
+
+See https://github.com/developer-onizuka/swapoff .
 
 
 # 1. Install Curl
