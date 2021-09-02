@@ -1,7 +1,7 @@
 # gpu-operator
 
 # 0. Disable Swapping
-This is very important step. If you skip this step, Kubelet will never run.
+This is very important step. If you skip this step, the kubelet will never run.
 
 See https://github.com/developer-onizuka/swapoff .
 
@@ -182,6 +182,7 @@ $ sudo systemctl restart docker
 # 4. Configuring about using systemd instead of cgroups.
 This step is very important. If you skip this step then the kubelet does not run. 
 Configure the Docker daemon, in particular to use systemd for the management of the container’s cgroups. 
+
 See also https://kubernetes.io/docs/setup/production-environment/container-runtimes/#docker .
 ```
 $ sudo mkdir /etc/docker
