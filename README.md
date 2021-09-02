@@ -1,5 +1,10 @@
 # gpu-operator
 
+# 0. Disable Swapping
+This is very important step. If you skip this step, Kubelet will never run.
+See https://github.com/developer-onizuka/swapoff
+
+
 # 1. Install Curl
 ```
 $ sudo apt-get install curl
@@ -465,4 +470,54 @@ k8s.gcr.io/pause                     3.5       ed210e3e4a5b   5 months ago   683
 $ kubectl get nodes
 NAME           STATUS   ROLES                  AGE     VERSION
 gpu-operator   Ready    control-plane,master   2m49s   v1.22.1
+```
+
+# 8. Install helm
+```
+$ curl -fsSL -o get_helm.sh https://raw.githubusercontent.com/helm/helm/master/scripts/get-helm-3 \
+>    && chmod 700 get_helm.sh \
+>    && ./get_helm.sh
+Downloading https://get.helm.sh/helm-v3.6.3-linux-amd64.tar.gz
+Verifying checksum... Done.
+Preparing to install helm into /usr/local/bin
+helm installed into /usr/local/bin/helm
+
+
+$ helm repo add nvidia https://nvidia.github.io/gpu-operator \
+>    && helm repo update
+"nvidia" has been added to your repositories
+Hang tight while we grab the latest from your chart repositories...
+...Successfully got an update from the "nvidia" chart repository
+Update Complete. ⎈Happy Helming!⎈
+
+$ helm install --wait --generate-name \
+>      nvidia/gpu-operator
+NAME: gpu-operator-1630573103
+LAST DEPLOYED: Thu Sep  2 17:58:26 2021
+NAMESPACE: default
+STATUS: deployed
+REVISION: 1
+TEST SUITE: None
+
+$ kubectl get pods -A
+NAMESPACE                NAME                                                              READY   STATUS     RESTARTS         AGE
+default                  gpu-operator-1630573103-node-feature-discovery-master-79cc9rwqj   1/1     Running    0                71m
+default                  gpu-operator-1630573103-node-feature-discovery-worker-7cjrq       1/1     Running    0                71m
+default                  gpu-operator-74dcf6544d-kv5nm                                     1/1     Running    0                71m
+gpu-operator-resources   gpu-feature-discovery-ksqfp                                       0/1     Init:0/1   0                70m
+gpu-operator-resources   nvidia-container-toolkit-daemonset-dft62                          0/1     Init:0/1   0                70m
+gpu-operator-resources   nvidia-dcgm-exporter-vp56t                                        0/1     Init:0/1   0                70m
+gpu-operator-resources   nvidia-dcgm-h2zwr                                                 0/1     Init:0/1   0                70m
+gpu-operator-resources   nvidia-device-plugin-daemonset-9v6wb                              0/1     Init:0/1   0                70m
+gpu-operator-resources   nvidia-driver-daemonset-s75t8                                     1/1     Running    16 (5m14s ago)   70m
+gpu-operator-resources   nvidia-operator-validator-7k95m                                   0/1     Init:0/4   0                70m
+kube-system              calico-kube-controllers-58497c65d5-57jhb                          1/1     Running    0                97m
+kube-system              calico-node-r4v7s                                                 1/1     Running    0                97m
+kube-system              coredns-78fcd69978-8cgrx                                          1/1     Running    0                98m
+kube-system              coredns-78fcd69978-qpdbg                                          1/1     Running    0                98m
+kube-system              etcd-gpu-operator                                                 1/1     Running    0                98m
+kube-system              kube-apiserver-gpu-operator                                       1/1     Running    0                98m
+kube-system              kube-controller-manager-gpu-operator                              1/1     Running    0                98m
+kube-system              kube-proxy-tdtd6                                                  1/1     Running    0                98m
+kube-system              kube-scheduler-gpu-operator                                       1/1     Running    0                98m
 ```
