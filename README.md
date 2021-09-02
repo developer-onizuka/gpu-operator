@@ -232,14 +232,8 @@ $ curl -s https://packages.cloud.google.com/apt/doc/apt-key.gpg | sudo apt-key a
 OK
 
 $ cat <<EOF | sudo tee /etc/apt/sources.list.d/kubernetes.list
-> deb https://apt.kubernetes.io/ kubernetes-xenial main
+ deb https://apt.kubernetes.io/ kubernetes-xenial main
 > EOF
-deb https://apt.kubernetes.io/ kubernetes-xenial main
-
-$ sudo apt-get update \
->    && sudo apt-get install -y -q kubelet kubectl kubeadm \
->    && sudo kubeadm init --pod-network-cidr=192.168.0.0/16^C
-
 
 $ sudo apt-get update \
 >    && sudo apt-get install -y -q kubelet kubectl kubeadm \
