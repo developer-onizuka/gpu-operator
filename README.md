@@ -3,7 +3,16 @@
 # 0. Disable Swapping and Blacklisting Nouveau driver
 This is very important step. If you skip this step, the kubelet will never run.
 
-See https://github.com/developer-onizuka/swapoff .
+See also https://github.com/developer-onizuka/swapoff .
+```
+$ sudo vi /etc/fstab
+# coment out like below:
+#/swapfile                                 none            swap    sw              0       0
+
+$ sudo swapoff -a
+$ sudo systemctl mask "swapfile.swap"
+Created symlink /etc/systemd/system/swapfile.swap → /dev/null.
+```
 
 The nouveau driver for NVIDIA GPUs must be blacklisted before starting the GPU Operator. 
 Create a file at /etc/modprobe.d/blacklist-nouveau.conf with the following contents:
