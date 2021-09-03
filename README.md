@@ -19,7 +19,7 @@ $ uname -a
 Linux worker 5.11.0-27-generic #29~20.04.1-Ubuntu SMP Wed Aug 11 15:58:17 UTC 2021 x86_64 x86_64 x86_64 GNU/Linux
 
 $ sudo vi /etc/fstab
-# coment out like below:
+# comment out like below:
 #/swapfile                                 none            swap    sw              0       0
 
 $ sudo swapoff -a
