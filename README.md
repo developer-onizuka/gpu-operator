@@ -488,7 +488,7 @@ NAME           STATUS   ROLES                  AGE     VERSION
 gpu-operator   Ready    control-plane,master   2m49s   v1.22.1
 ```
 
-# 8. Install helm
+# 8. Install helm and GPU operator
 ```
 $ curl -fsSL -o get_helm.sh https://raw.githubusercontent.com/helm/helm/master/scripts/get-helm-3 \
 && chmod 700 get_helm.sh \
@@ -539,4 +539,12 @@ kube-system              kube-apiserver-gpu-operator                            
 kube-system              kube-controller-manager-gpu-operator                              1/1     Running    0                98m
 kube-system              kube-proxy-tdtd6                                                  1/1     Running    0                98m
 kube-system              kube-scheduler-gpu-operator                                       1/1     Running    0                98m
+```
+
+
+# 9. Uninstall GPU operator
+
+```
+$ helm ls -n default | awk '/gpu-operator/{print $1}'
+$ helm delete gpu-operator-1630661158 -n default 
 ```
