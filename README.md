@@ -6,8 +6,8 @@ https://docs.nvidia.com/datacenter/cloud-native/gpu-operator/getting-started.htm
 | --- | --- | --- | --- |
 | #1 | No GPU operator | In Host | In Host |
 | #2 | GPU Operator (default) | DaemonSet | DaemonSet |
-| #3 | GPU Operator w/ driver.enabled=false | In Host | DaemonSet |
-| #4 | GPU Operator w/ toolkit.enabled=false | DaemonSet | In Host |
+| #3 | GPU Operator (w/ driver.enabled=false) | In Host | DaemonSet |
+| #4 | GPU Operator (w/ toolkit.enabled=false) | DaemonSet | In Host |
 
 
 # 0. Disable Swapping and Blacklisting Nouveau driver
