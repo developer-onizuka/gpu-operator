@@ -515,7 +515,8 @@ Hang tight while we grab the latest from your chart repositories...
 Update Complete. ⎈Happy Helming!⎈
 
 $ helm install --wait --generate-name \
-nvidia/gpu-operator --set driver.enabled=false
+nvidia/gpu-operator \
+--set driver.enabled=false
 -----
 NAME: gpu-operator-1630573103
 LAST DEPLOYED: Thu Sep  2 17:58:26 2021
