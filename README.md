@@ -1,4 +1,4 @@
-# gpu-operator with Host driver preinstalled
+# GPU Operator with preinstalled driver in Host
 
 # 0. Disable Swapping and Blacklisting Nouveau driver
 This is very important step. If you skip this step, the kubelet will never run.
