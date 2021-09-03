@@ -204,6 +204,7 @@ See also https://kubernetes.io/docs/setup/production-environment/container-runti
 ```
 $ sudo mkdir /etc/docker
 mkdir: cannot create directory ‘/etc/docker’: File exists
+-----
 $ cat <<EOF | sudo tee /etc/docker/daemon.json
 {
   "exec-opts": ["native.cgroupdriver=systemd"],
@@ -229,7 +230,6 @@ REPOSITORY   TAG       IMAGE ID   CREATED   SIZE
 
 # 6. Install kubernetes
 See also https://docs.nvidia.com/datacenter/cloud-native/kubernetes/install-k8s.html .
-
 ```
 $ sudo apt-get update \
 && sudo apt-get install -y apt-transport-https curl
