@@ -33,7 +33,8 @@ Processing triggers for man-db (2.9.1-1) ...
 # 2. Install Docker-CE
 ```
 $ curl https://get.docker.com | sh \
->   && sudo systemctl --now enable docker
+&& sudo systemctl --now enable docker
+-----
   % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
                                  Dload  Upload   Total   Spent    Left  Speed
 100 18617  100 18617    0     0   101k      0 --:--:-- --:--:-- --:--:--  101k
@@ -100,6 +101,7 @@ WARNING: Access to the remote API on a privileged Docker daemon is equivalent
 
 Synchronizing state of docker.service with SysV service script with /lib/systemd/systemd-sysv-install.
 Executing: /lib/systemd/systemd-sysv-install enable docker
+-----
 
 $ sudo docker images
 REPOSITORY   TAG       IMAGE ID   CREATED   SIZE
@@ -108,8 +110,9 @@ REPOSITORY   TAG       IMAGE ID   CREATED   SIZE
 # 3. Install Nvidia Docker2
 ```
 $ distribution=$(. /etc/os-release;echo $ID$VERSION_ID) \
->    && curl -s -L https://nvidia.github.io/nvidia-docker/gpgkey | sudo apt-key add - \
->    && curl -s -L https://nvidia.github.io/nvidia-docker/$distribution/nvidia-docker.list | sudo tee /etc/apt/sources.list.d/nvidia-docker.list
+&& curl -s -L https://nvidia.github.io/nvidia-docker/gpgkey | sudo apt-key add - \
+&& curl -s -L https://nvidia.github.io/nvidia-docker/$distribution/nvidia-docker.list | sudo tee /etc/apt/sources.list.d/nvidia-docker.list
+-----
 OK
 deb https://nvidia.github.io/libnvidia-container/stable/ubuntu18.04/$(ARCH) /
 #deb https://nvidia.github.io/libnvidia-container/experimental/ubuntu18.04/$(ARCH) /
@@ -215,7 +218,8 @@ See also https://docs.nvidia.com/datacenter/cloud-native/kubernetes/install-k8s.
 
 ```
 $ sudo apt-get update \
->    && sudo apt-get install -y apt-transport-https curl
+&& sudo apt-get install -y apt-transport-https curl
+-----
 Hit:1 https://nvidia.github.io/libnvidia-container/stable/ubuntu18.04/amd64  InRelease
 Hit:2 https://nvidia.github.io/nvidia-container-runtime/stable/ubuntu18.04/amd64  InRelease
 Hit:3 https://nvidia.github.io/nvidia-docker/ubuntu18.04/amd64  InRelease
@@ -243,8 +247,9 @@ deb https://apt.kubernetes.io/ kubernetes-xenial main
 EOF
 
 $ sudo apt-get update \
->    && sudo apt-get install -y -q kubelet kubectl kubeadm \
->    && sudo kubeadm init --pod-network-cidr=192.168.0.0/16
+&& sudo apt-get install -y -q kubelet kubectl kubeadm \
+&& sudo kubeadm init --pod-network-cidr=192.168.0.0/16
+-----
 Hit:1 https://nvidia.github.io/libnvidia-container/stable/ubuntu18.04/amd64  InRelease
 Hit:2 https://nvidia.github.io/nvidia-container-runtime/stable/ubuntu18.04/amd64  InRelease
 Hit:3 https://nvidia.github.io/nvidia-docker/ubuntu18.04/amd64  InRelease
@@ -394,8 +399,8 @@ kubeadm join 192.168.122.244:6443 --token 6zhg2i.phaheb96vw8utouy \
 	--discovery-token-ca-cert-hash sha256:2c1658332ad2f9dda9cc9f62157b9700861e311f02d68d0d18baa80290e80139 
 
 $ mkdir -p $HOME/.kube \
->    && sudo cp -i /etc/kubernetes/admin.conf $HOME/.kube/config \
->    && sudo chown $(id -u):$(id -g) $HOME/.kube/config
+&& sudo cp -i /etc/kubernetes/admin.conf $HOME/.kube/config \
+&& sudo chown $(id -u):$(id -g) $HOME/.kube/config
 
 $ kubectl apply -f https://docs.projectcalico.org/manifests/calico.yaml
 configmap/calico-config created
@@ -477,8 +482,9 @@ gpu-operator   Ready    control-plane,master   2m49s   v1.22.1
 # 8. Install helm
 ```
 $ curl -fsSL -o get_helm.sh https://raw.githubusercontent.com/helm/helm/master/scripts/get-helm-3 \
->    && chmod 700 get_helm.sh \
->    && ./get_helm.sh
+&& chmod 700 get_helm.sh \
+&& ./get_helm.sh
+-----
 Downloading https://get.helm.sh/helm-v3.6.3-linux-amd64.tar.gz
 Verifying checksum... Done.
 Preparing to install helm into /usr/local/bin
@@ -486,14 +492,16 @@ helm installed into /usr/local/bin/helm
 
 
 $ helm repo add nvidia https://nvidia.github.io/gpu-operator \
->    && helm repo update
+&& helm repo update
+-----
 "nvidia" has been added to your repositories
 Hang tight while we grab the latest from your chart repositories...
 ...Successfully got an update from the "nvidia" chart repository
 Update Complete. ⎈Happy Helming!⎈
 
 $ helm install --wait --generate-name \
->      nvidia/gpu-operator
+nvidia/gpu-operator
+-----
 NAME: gpu-operator-1630573103
 LAST DEPLOYED: Thu Sep  2 17:58:26 2021
 NAMESPACE: default
