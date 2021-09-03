@@ -571,6 +571,13 @@ spec:
 
 $ kubectl apply -f ubuntu-gpu.yaml
 
+$ kubectl get pods
+NAME                                                              READY   STATUS    RESTARTS   AGE
+gpu-operator-1630662996-node-feature-discovery-master-8477x4t7m   1/1     Running   0          57m
+gpu-operator-1630662996-node-feature-discovery-worker-2gkph       1/1     Running   0          57m
+gpu-operator-74dcf6544d-xlgcz                                     1/1     Running   0          57m
+ubuntu                                                            1/1     Running   0          30m
+
 $ kubectl exec -it ubuntu -- /bin/bash
 root@ubuntu:/# nvidia-smi
 Fri Sep  3 10:29:53 2021       
