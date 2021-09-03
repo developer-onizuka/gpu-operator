@@ -1,4 +1,4 @@
-# gpu-operator
+# gpu-operator with Host driver preinstalled
 
 # 0. Disable Swapping and Blacklisting Nouveau driver
 This is very important step. If you skip this step, the kubelet will never run.
@@ -15,7 +15,13 @@ options nouveau modeset=0
 $ sudo update-initramfs -u
 ```
 
-# 1. Install Curl
+# 1. Install Nvidia Driver on Host Machine
+```
+$ sudo apt-get update
+$ sudo apt-get install nvidia-driver-470
+```
+
+# 2. Install Curl
 ```
 $ sudo apt-get install curl
 Reading package lists... Done
@@ -39,7 +45,7 @@ Setting up curl (7.68.0-1ubuntu2.6) ...
 Processing triggers for man-db (2.9.1-1) ...
 ```
 
-# 2. Install Docker-CE
+# 3. Install Docker-CE
 ```
 $ curl https://get.docker.com | sh \
 && sudo systemctl --now enable docker
@@ -116,7 +122,7 @@ $ sudo docker images
 REPOSITORY   TAG       IMAGE ID   CREATED   SIZE
 ```
 
-# 3. Install Nvidia Docker2
+# 4. Install Nvidia Docker2
 ```
 $ distribution=$(. /etc/os-release;echo $ID$VERSION_ID) \
 && curl -s -L https://nvidia.github.io/nvidia-docker/gpgkey | sudo apt-key add - \
@@ -191,7 +197,7 @@ Processing triggers for libc-bin (2.31-0ubuntu9.2) ...
 $ sudo systemctl restart docker
 ```
 
-# 4. Configuring about using systemd instead of cgroups.
+# 5. Configuring about using systemd instead of cgroups.
 This step is very important. If you skip this step then the kubelet does not run. 
 Configure the Docker daemon, in particular to use systemd for the management of the container’s cgroups. 
 
@@ -222,7 +228,7 @@ $ sudo docker images
 REPOSITORY   TAG       IMAGE ID   CREATED   SIZE
 ```
 
-# 5. Install kubernetes
+# 6. Install kubernetes
 See also https://docs.nvidia.com/datacenter/cloud-native/kubernetes/install-k8s.html .
 
 ```
@@ -443,7 +449,7 @@ $ kubectl taint nodes --all node-role.kubernetes.io/master-
 node/gpu-operator untainted
 ```
 
-# 6. Check the status of kubelet
+# 7. Check the status of kubelet
 ```
 $ sudo systemctl status kubelet
 ● kubelet.service - kubelet: The Kubernetes Node Agent
@@ -470,7 +476,7 @@ $ sudo systemctl status kubelet
  9月 02 14:29:03 gpu-operator kubelet[19702]: E0902 14:29:03.816969   19702 kubelet.go:2332] "Container r>
 ```
 
-# 7. Check the images
+# 8. Check the images
 ```
 $ sudo docker images
 REPOSITORY                           TAG       IMAGE ID       CREATED        SIZE
@@ -488,7 +494,7 @@ NAME           STATUS   ROLES                  AGE     VERSION
 gpu-operator   Ready    control-plane,master   2m49s   v1.22.1
 ```
 
-# 8. Install helm and GPU operator
+# 9. Install helm and GPU operator
 ```
 $ curl -fsSL -o get_helm.sh https://raw.githubusercontent.com/helm/helm/master/scripts/get-helm-3 \
 && chmod 700 get_helm.sh \
@@ -509,7 +515,7 @@ Hang tight while we grab the latest from your chart repositories...
 Update Complete. ⎈Happy Helming!⎈
 
 $ helm install --wait --generate-name \
-nvidia/gpu-operator
+nvidia/gpu-operator --set driver.enabled=false
 -----
 NAME: gpu-operator-1630573103
 LAST DEPLOYED: Thu Sep  2 17:58:26 2021
@@ -518,31 +524,78 @@ STATUS: deployed
 REVISION: 1
 TEST SUITE: None
 
-$ kubectl get pods -A
-NAMESPACE                NAME                                                              READY   STATUS     RESTARTS         AGE
-default                  gpu-operator-1630573103-node-feature-discovery-master-79cc9rwqj   1/1     Running    0                71m
-default                  gpu-operator-1630573103-node-feature-discovery-worker-7cjrq       1/1     Running    0                71m
-default                  gpu-operator-74dcf6544d-kv5nm                                     1/1     Running    0                71m
-gpu-operator-resources   gpu-feature-discovery-ksqfp                                       0/1     Init:0/1   0                70m
-gpu-operator-resources   nvidia-container-toolkit-daemonset-dft62                          0/1     Init:0/1   0                70m
-gpu-operator-resources   nvidia-dcgm-exporter-vp56t                                        0/1     Init:0/1   0                70m
-gpu-operator-resources   nvidia-dcgm-h2zwr                                                 0/1     Init:0/1   0                70m
-gpu-operator-resources   nvidia-device-plugin-daemonset-9v6wb                              0/1     Init:0/1   0                70m
-gpu-operator-resources   nvidia-driver-daemonset-s75t8                                     1/1     Running    16 (5m14s ago)   70m
-gpu-operator-resources   nvidia-operator-validator-7k95m                                   0/1     Init:0/4   0                70m
-kube-system              calico-kube-controllers-58497c65d5-57jhb                          1/1     Running    0                97m
-kube-system              calico-node-r4v7s                                                 1/1     Running    0                97m
-kube-system              coredns-78fcd69978-8cgrx                                          1/1     Running    0                98m
-kube-system              coredns-78fcd69978-qpdbg                                          1/1     Running    0                98m
-kube-system              etcd-gpu-operator                                                 1/1     Running    0                98m
-kube-system              kube-apiserver-gpu-operator                                       1/1     Running    0                98m
-kube-system              kube-controller-manager-gpu-operator                              1/1     Running    0                98m
-kube-system              kube-proxy-tdtd6                                                  1/1     Running    0                98m
-kube-system              kube-scheduler-gpu-operator                                       1/1     Running    0                98m
+$ kubectl get pod -A
+NAMESPACE                NAME                                                              READY   STATUS      RESTARTS      AGE
+default                  gpu-operator-1630662996-node-feature-discovery-master-8477x4t7m   1/1     Running     0             30m
+default                  gpu-operator-1630662996-node-feature-discovery-worker-2gkph       1/1     Running     0             30m
+default                  gpu-operator-74dcf6544d-xlgcz                                     1/1     Running     0             30m
+gpu-operator-resources   gpu-feature-discovery-gpx48                                       1/1     Running     0             29m
+gpu-operator-resources   nvidia-container-toolkit-daemonset-cqbd6                          1/1     Running     0             29m
+gpu-operator-resources   nvidia-cuda-validator-cpjvz                                       0/1     Completed   0             29m
+gpu-operator-resources   nvidia-dcgm-485gt                                                 1/1     Running     0             29m
+gpu-operator-resources   nvidia-dcgm-exporter-rgxj7                                        1/1     Running     4 (26m ago)   29m
+gpu-operator-resources   nvidia-device-plugin-daemonset-fq45d                              1/1     Running     0             29m
+gpu-operator-resources   nvidia-device-plugin-validator-557rb                              0/1     Completed   0             25m
+gpu-operator-resources   nvidia-operator-validator-22sxz                                   1/1     Running     0             29m
+kube-system              calico-kube-controllers-58497c65d5-dnld7                          1/1     Running     4 (33m ago)   72m
+kube-system              calico-node-6q8xj                                                 1/1     Running     4 (33m ago)   72m
+kube-system              coredns-78fcd69978-4sdx2                                          1/1     Running     4 (33m ago)   75m
+kube-system              coredns-78fcd69978-cxs29                                          1/1     Running     4 (33m ago)   75m
+kube-system              etcd-gpu-operator                                                 1/1     Running     5 (32m ago)   76m
+kube-system              kube-apiserver-gpu-operator                                       1/1     Running     6 (32m ago)   76m
+kube-system              kube-controller-manager-gpu-operator                              1/1     Running     5 (32m ago)   76m
+kube-system              kube-proxy-tgslp                                                  1/1     Running     4 (33m ago)   75m
+kube-system              kube-scheduler-gpu-operator                                       1/1     Running     5 (32m ago)   76m
+```
+# 10. Start Ubuntu container without Nvidia Driver
+You can see the container of ubuntu can do nvidia-smi even though it could not install nvidia-driver inside.
+
+```
+$ cat ubuntu-gpu.yaml 
+apiVersion: v1
+kind: Pod
+metadata:
+  name: ubuntu 
+  labels:
+    name: ubuntu
+spec:
+  containers:
+  - name: ubuntu
+    image: ubuntu
+    command:
+    - sleep
+    - "3600"
+    resources:
+      limits:
+         nvidia.com/gpu: 1
+
+$ kubectl apply -f ubuntu-gpu.yaml
+
+$ kubectl exec -it ubuntu -- /bin/bash
+root@ubuntu:/# nvidia-smi
+Fri Sep  3 10:29:53 2021       
++-----------------------------------------------------------------------------+
+| NVIDIA-SMI 470.57.02    Driver Version: 470.57.02    CUDA Version: 11.4     |
+|-------------------------------+----------------------+----------------------+
+| GPU  Name        Persistence-M| Bus-Id        Disp.A | Volatile Uncorr. ECC |
+| Fan  Temp  Perf  Pwr:Usage/Cap|         Memory-Usage | GPU-Util  Compute M. |
+|                               |                      |               MIG M. |
+|===============================+======================+======================|
+|   0  Quadro P1000        Off  | 00000000:04:00.0 Off |                  N/A |
+| 34%   39C    P8    N/A /  N/A |     11MiB /  4040MiB |      0%      Default |
+|                               |                      |                  N/A |
++-------------------------------+----------------------+----------------------+
+                                                                               
++-----------------------------------------------------------------------------+
+| Processes:                                                                  |
+|  GPU   GI   CI        PID   Type   Process name                  GPU Memory |
+|        ID   ID                                                   Usage      |
+|=============================================================================|
++-----------------------------------------------------------------------------+
+
 ```
 
-
-# 9. Uninstall GPU operator
+# 11. Uninstall GPU operator
 
 ```
 $ helm ls -n default | awk '/gpu-operator/{print $1}'
