@@ -140,7 +140,7 @@ $ sudo docker images
 REPOSITORY   TAG       IMAGE ID   CREATED   SIZE
 ```
 
-# 4. Install Nvidia Docker2
+# 4. Install Nvidia Docker2 (Nvidia Toolkit)
 You can skip this because GPU operator will introduce the daemonSet of nvidia-container-toolkit-daemonset in later.
 
 # 5. Configuring about using systemd instead of cgroups.
