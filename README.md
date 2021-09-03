@@ -600,7 +600,36 @@ Fri Sep  3 10:29:53 2021
 |        ID   ID                                                   Usage      |
 |=============================================================================|
 +-----------------------------------------------------------------------------+
+```
 
+The following is the yaml file without "nvidia.com/gpu: 1". As you can see below, nvidia-smi is not available.
+```
+$ cat ubuntu.yaml 
+apiVersion: v1
+kind: Pod
+metadata:
+  name: ubuntu 
+  labels:
+    name: ubuntu
+spec:
+  containers:
+  - name: ubuntu
+    image: ubuntu
+    command:
+    - sleep
+    - "3600"
+
+$ kubectl apply -f ubuntu.yaml
+$ kubectl get pod
+NAME                                                              READY   STATUS    RESTARTS   AGE
+gpu-operator-1630662996-node-feature-discovery-master-8477x4t7m   1/1     Running   0          63m
+gpu-operator-1630662996-node-feature-discovery-worker-2gkph       1/1     Running   0          63m
+gpu-operator-74dcf6544d-xlgcz                                     1/1     Running   0          63m
+ubuntu                                                            1/1     Running   0          12s
+
+$ kubectl exec -it ubuntu -- /bin/bash
+root@ubuntu:/# nvidia-smi
+bash: nvidia-smi: command not found
 ```
 
 # 11. Uninstall GPU operator
