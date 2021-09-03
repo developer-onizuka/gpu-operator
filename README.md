@@ -2,7 +2,7 @@
 
 https://docs.nvidia.com/datacenter/cloud-native/gpu-operator/getting-started.html#chart-customization-options
 
-| # | Scenario | Nvidia Driver | Nvidia Tool kit |
+| # | Scenario | Nvidia Driver | Nvidia Toolkit |
 | --- | --- | --- | --- |
 | #1 | No GPU operator | In Host | In Host |
 | #2 | GPU Operator (default) | DaemonSet | DaemonSet |
