@@ -141,7 +141,7 @@ REPOSITORY   TAG       IMAGE ID   CREATED   SIZE
 ```
 
 # 4. Install Nvidia Docker2 (Nvidia Toolkit)
-You can skip this because GPU operator will introduce the daemonSet of nvidia-container-toolkit-daemonset in later.
+You can skip this because GPU operator will introduce the DaemonSet of nvidia-container-toolkit-daemonset in later.
 
 # 5. Configuring about using systemd instead of cgroups.
 This step is very important. If you skip this step then the kubelet does not run. 
