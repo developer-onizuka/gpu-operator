@@ -1,10 +1,19 @@
 # gpu-operator
 
-# 0. Disable Swapping
+# 0. Disable Swapping and Blacklisting Nouveau driver
 This is very important step. If you skip this step, the kubelet will never run.
 
 See https://github.com/developer-onizuka/swapoff .
 
+The nouveau driver for NVIDIA GPUs must be blacklisted before starting the GPU Operator.
+```
+Create a file at /etc/modprobe.d/blacklist-nouveau.conf with the following contents:
+-----
+blacklist nouveau
+options nouveau modeset=0
+-----
+$ sudo update-initramfs -u
+```
 
 # 1. Install Curl
 ```
