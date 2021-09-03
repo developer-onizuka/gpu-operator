@@ -579,6 +579,7 @@ gpu-operator-74dcf6544d-xlgcz                                     1/1     Runnin
 ubuntu                                                            1/1     Running   0          30m
 -----
 $ kubectl exec -it ubuntu -- /bin/bash
+-----
 root@ubuntu:/# dpkg -l |grep -i nvidia
 --> No result, this means container has no driver. But you can do nvidia-smi, even though no driver inside of container.
 -----
@@ -631,6 +632,7 @@ gpu-operator-74dcf6544d-xlgcz                                     1/1     Runnin
 ubuntu                                                            1/1     Running   0          12s
 -----
 $ kubectl exec -it ubuntu -- /bin/bash
+-----
 root@ubuntu:/# nvidia-smi
 bash: nvidia-smi: command not found
 ```
