@@ -1,5 +1,7 @@
 # GPU Operator with preinstalled driver in Host (This is the Case #3 below)
 
+https://docs.nvidia.com/datacenter/cloud-native/gpu-operator/getting-started.html#chart-customization-options
+
 | # | Scenario | Nvidia Driver | Nvidia Tool kit |
 | --- | --- | --- | --- |
 | #1 | No GPU operator | In Host | In Host |
