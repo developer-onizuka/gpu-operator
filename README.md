@@ -117,7 +117,6 @@ WARNING: Access to the remote API on a privileged Docker daemon is equivalent
 Synchronizing state of docker.service with SysV service script with /lib/systemd/systemd-sysv-install.
 Executing: /lib/systemd/systemd-sysv-install enable docker
 -----
-
 $ sudo docker images
 REPOSITORY   TAG       IMAGE ID   CREATED   SIZE
 ```
@@ -134,7 +133,7 @@ deb https://nvidia.github.io/libnvidia-container/stable/ubuntu18.04/$(ARCH) /
 deb https://nvidia.github.io/nvidia-container-runtime/stable/ubuntu18.04/$(ARCH) /
 #deb https://nvidia.github.io/nvidia-container-runtime/experimental/ubuntu18.04/$(ARCH) /
 deb https://nvidia.github.io/nvidia-docker/ubuntu18.04/$(ARCH) /
-
+-----
 $ sudo apt-get update
 Get:1 https://nvidia.github.io/libnvidia-container/stable/ubuntu18.04/amd64  InRelease [1,484 B]
 Get:2 https://nvidia.github.io/nvidia-container-runtime/stable/ubuntu18.04/amd64  InRelease [1,481 B]
@@ -149,7 +148,7 @@ Get:10 https://nvidia.github.io/nvidia-docker/ubuntu18.04/amd64  Packages [4,488
 Hit:11 http://security.ubuntu.com/ubuntu focal-security InRelease
 Fetched 28.0 kB in 1s (24.8 kB/s)
 Reading package lists... Done
-
+-----
 $ sudo apt-get install -y nvidia-docker2
 Reading package lists... Done
 Building dependency tree       
@@ -193,7 +192,7 @@ Setting up nvidia-container-toolkit (1.5.1-1) ...
 Setting up nvidia-container-runtime (3.5.0-1) ...
 Setting up nvidia-docker2 (2.6.0-1) ...
 Processing triggers for libc-bin (2.31-0ubuntu9.2) ...
-
+-----
 $ sudo systemctl restart docker
 ```
 
@@ -215,15 +214,15 @@ $ cat <<EOF | sudo tee /etc/docker/daemon.json
   "storage-driver": "overlay2"
 }
 EOF
-
+-----
 $ sudo systemctl enable docker
 Synchronizing state of docker.service with SysV service script with /lib/systemd/systemd-sysv-install.
 Executing: /lib/systemd/systemd-sysv-install enable docker
-
+-----
 $ sudo systemctl daemon-reload
-
+-----
 $ sudo systemctl restart docker
-
+-----
 $ sudo docker images
 REPOSITORY   TAG       IMAGE ID   CREATED   SIZE
 ```
@@ -253,14 +252,14 @@ The following package was automatically installed and is no longer required:
   libllvm11
 Use 'sudo apt autoremove' to remove it.
 0 upgraded, 0 newly installed, 0 to remove and 0 not upgraded.
-
+-----
 $ curl -s https://packages.cloud.google.com/apt/doc/apt-key.gpg | sudo apt-key add -
 OK
-
+-----
 $ cat <<EOF | sudo tee /etc/apt/sources.list.d/kubernetes.list
 deb https://apt.kubernetes.io/ kubernetes-xenial main
 EOF
-
+-----
 $ sudo apt-get update \
 && sudo apt-get install -y -q kubelet kubectl kubeadm \
 && sudo kubeadm init --pod-network-cidr=192.168.0.0/16
@@ -412,11 +411,11 @@ Then you can join any number of worker nodes by running the following on each as
 
 kubeadm join 192.168.122.244:6443 --token 6zhg2i.phaheb96vw8utouy \
 	--discovery-token-ca-cert-hash sha256:2c1658332ad2f9dda9cc9f62157b9700861e311f02d68d0d18baa80290e80139 
-
+-----
 $ mkdir -p $HOME/.kube \
 && sudo cp -i /etc/kubernetes/admin.conf $HOME/.kube/config \
 && sudo chown $(id -u):$(id -g) $HOME/.kube/config
-
+-----
 $ kubectl apply -f https://docs.projectcalico.org/manifests/calico.yaml
 configmap/calico-config created
 customresourcedefinition.apiextensions.k8s.io/bgpconfigurations.crd.projectcalico.org created
@@ -444,7 +443,7 @@ deployment.apps/calico-kube-controllers created
 serviceaccount/calico-kube-controllers created
 Warning: policy/v1beta1 PodDisruptionBudget is deprecated in v1.21+, unavailable in v1.25+; use policy/v1 PodDisruptionBudget
 poddisruptionbudget.policy/calico-kube-controllers created
-
+-----
 $ kubectl taint nodes --all node-role.kubernetes.io/master-
 node/gpu-operator untainted
 ```
@@ -488,7 +487,7 @@ calico/cni                           v3.20.0   4945b742b8e6   4 weeks ago    146
 k8s.gcr.io/etcd                      3.5.0-0   004811815584   2 months ago   295MB
 k8s.gcr.io/coredns/coredns           v1.8.4    8d147537fb7d   3 months ago   47.6MB
 k8s.gcr.io/pause                     3.5       ed210e3e4a5b   5 months ago   683kB
-
+-----
 $ kubectl get nodes
 NAME           STATUS   ROLES                  AGE     VERSION
 gpu-operator   Ready    control-plane,master   2m49s   v1.22.1
@@ -505,7 +504,7 @@ Verifying checksum... Done.
 Preparing to install helm into /usr/local/bin
 helm installed into /usr/local/bin/helm
 
-
+-----
 $ helm repo add nvidia https://nvidia.github.io/gpu-operator \
 && helm repo update
 -----
@@ -513,7 +512,7 @@ $ helm repo add nvidia https://nvidia.github.io/gpu-operator \
 Hang tight while we grab the latest from your chart repositories...
 ...Successfully got an update from the "nvidia" chart repository
 Update Complete. ⎈Happy Helming!⎈
-
+-----
 $ helm install --wait --generate-name \
 nvidia/gpu-operator \
 --set driver.enabled=false
@@ -524,7 +523,7 @@ NAMESPACE: default
 STATUS: deployed
 REVISION: 1
 TEST SUITE: None
-
+-----
 $ kubectl get pod -A
 NAMESPACE                NAME                                                              READY   STATUS      RESTARTS      AGE
 default                  gpu-operator-1630662996-node-feature-discovery-master-8477x4t7m   1/1     Running     0             30m
@@ -569,20 +568,20 @@ spec:
     resources:
       limits:
          nvidia.com/gpu: 1
-
+-----
 $ kubectl apply -f ubuntu-gpu.yaml
-
+-----
 $ kubectl get pods
 NAME                                                              READY   STATUS    RESTARTS   AGE
 gpu-operator-1630662996-node-feature-discovery-master-8477x4t7m   1/1     Running   0          57m
 gpu-operator-1630662996-node-feature-discovery-worker-2gkph       1/1     Running   0          57m
 gpu-operator-74dcf6544d-xlgcz                                     1/1     Running   0          57m
 ubuntu                                                            1/1     Running   0          30m
-
+-----
 $ kubectl exec -it ubuntu -- /bin/bash
 root@ubuntu:/# dpkg -l |grep -i nvidia
 --> No result, this means container has no driver. But you can do nvidia-smi, even though no driver inside of container.
-
+-----
 root@ubuntu:/# nvidia-smi
 Fri Sep  3 10:29:53 2021       
 +-----------------------------------------------------------------------------+
@@ -621,15 +620,16 @@ spec:
     command:
     - sleep
     - "3600"
-
+-----
 $ kubectl apply -f ubuntu.yaml
+-----
 $ kubectl get pod
 NAME                                                              READY   STATUS    RESTARTS   AGE
 gpu-operator-1630662996-node-feature-discovery-master-8477x4t7m   1/1     Running   0          63m
 gpu-operator-1630662996-node-feature-discovery-worker-2gkph       1/1     Running   0          63m
 gpu-operator-74dcf6544d-xlgcz                                     1/1     Running   0          63m
 ubuntu                                                            1/1     Running   0          12s
-
+-----
 $ kubectl exec -it ubuntu -- /bin/bash
 root@ubuntu:/# nvidia-smi
 bash: nvidia-smi: command not found
