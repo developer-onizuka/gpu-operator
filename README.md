@@ -86,6 +86,21 @@ Unpacking curl (7.68.0-1ubuntu2.6) ...
 Setting up curl (7.68.0-1ubuntu2.6) ...
 Processing triggers for man-db (2.9.1-1) ...
 ```
+(Optinal: Changing image dir of docker)
+```
+$ sudo su
+root@ubuntu-k8s:~ # cp /lib/systemd/system/docker.service /etc/systemd/system/
+root@ubuntu-k8s:~ # vi /etc/systemd/system/docker.service 
+~~~~~~~~~~
+# Edit as like below:
+ExecStart=/usr/bin/dockerd -H fd:// --containerd=/run/containerd/containerd.sock --data-root /mnt/docker
+#ExecStart=/usr/bin/dockerd -H fd:// --containerd=/run/containerd/containerd.sock
+~~~~~~~~~~
+root@ubuntu-k8s:~ # systemctl daemon-reload
+root@ubuntu-k8s:~ # systemctl restart docker
+root@ubuntu-k8s:~ # exit
+```
+
 
 # 3. Install Docker-CE
 ```
