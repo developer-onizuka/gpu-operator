@@ -566,20 +566,33 @@ $ cat ubuntu-gpu.yaml
 apiVersion: v1
 kind: Pod
 metadata:
-  name: ubuntu 
+  name: ubuntu-gpu
   labels:
-    name: ubuntu
+    name: ubuntu-gpu
 spec:
   containers:
   - name: ubuntu
     image: ubuntu
+    volumeMounts:
+    - name: tmporary
+      mountPath: /mnt
     command:
     - sleep
     - "3600"
     resources:
       limits:
          nvidia.com/gpu: 1
+  volumes:
+  - name: tmporary
+    persistentVolumeClaim:
+     claimName: ubuntu-pvc
+  dnsPolicy: "None"
+  dnsConfig:
+    nameservers:
+      - 8.8.8.8
 -----
+$ kubectl apply -f sc-lv.yaml
+$ kubectl apply -f ubuntu-pvc.yaml
 $ kubectl apply -f ubuntu-gpu.yaml
 -----
 $ kubectl get pods
