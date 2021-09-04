@@ -61,6 +61,31 @@ UUID=31e1e66c-fe71-4fcf-b6f8-0478da9070a6 /mnt ext4 data=ordered 0 0
 ```
 $ sudo apt-get update
 $ sudo apt-get install nvidia-driver-470
+$ reboot
+
+$ nvidia-smi
+Sat Sep  4 13:02:44 2021       
++-----------------------------------------------------------------------------+
+| NVIDIA-SMI 470.57.02    Driver Version: 470.57.02    CUDA Version: 11.4     |
+|-------------------------------+----------------------+----------------------+
+| GPU  Name        Persistence-M| Bus-Id        Disp.A | Volatile Uncorr. ECC |
+| Fan  Temp  Perf  Pwr:Usage/Cap|         Memory-Usage | GPU-Util  Compute M. |
+|                               |                      |               MIG M. |
+|===============================+======================+======================|
+|   0  Quadro P1000        Off  | 00000000:04:00.0 Off |                  N/A |
+| 34%   49C    P8    N/A /  N/A |     11MiB /  4040MiB |      0%      Default |
+|                               |                      |                  N/A |
++-------------------------------+----------------------+----------------------+
+                                                                               
++-----------------------------------------------------------------------------+
+| Processes:                                                                  |
+|  GPU   GI   CI        PID   Type   Process name                  GPU Memory |
+|        ID   ID                                                   Usage      |
+|=============================================================================|
+|    0   N/A  N/A       790      G   /usr/lib/xorg/Xorg                  4MiB |
+|    0   N/A  N/A      2266      G   /usr/lib/xorg/Xorg                  4MiB |
++-----------------------------------------------------------------------------+
+
 ```
 
 # 2. Install Curl
