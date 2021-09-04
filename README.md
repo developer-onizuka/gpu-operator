@@ -21,12 +21,11 @@ Linux worker 5.11.0-27-generic #29~20.04.1-Ubuntu SMP Wed Aug 11 15:58:17 UTC 20
 $ sudo vi /etc/fstab
 # comment out like below:
 #/swapfile                                 none            swap    sw              0       0
-
+-----
 $ sudo swapoff -a
 $ sudo systemctl mask "swapfile.swap"
 Created symlink /etc/systemd/system/swapfile.swap → /dev/null.
 ```
-
 The nouveau driver for NVIDIA GPUs must be blacklisted before starting the GPU Operator. 
 Create a file at /etc/modprobe.d/blacklist-nouveau.conf with the following contents:
 ```
@@ -35,6 +34,27 @@ blacklist nouveau
 options nouveau modeset=0
 
 $ sudo update-initramfs -u
+```
+
+(Optional: mounting NVMe Device for large volume)
+```
+$ sudo blkid /dev/nvme0n1 
+/dev/nvme0n1: UUID="31e1e66c-fe71-4fcf-b6f8-0478da9070a6" TYPE="ext4"
+
+$ cat /etc/fstab 
+# /etc/fstab: static file system information.
+#
+# Use 'blkid' to print the universally unique identifier for a
+# device; this may be used with UUID= as a more robust way to name devices
+# that works even if disks are added and removed. See fstab(5).
+#
+# <file system> <mount point>   <type>  <options>       <dump>  <pass>
+# / was on /dev/vda5 during installation
+UUID=c5eedd90-ea6c-498a-bd1d-0fc765df1860 /               ext4    errors=remount-ro 0       1
+# /boot/efi was on /dev/vda1 during installation
+UUID=616D-7203  /boot/efi       vfat    umask=0077      0       1
+#/swapfile                                 none            swap    sw              0       0
+UUID=31e1e66c-fe71-4fcf-b6f8-0478da9070a6 /mnt ext4 data=ordered 0 0
 ```
 
 # 1. Install Nvidia Driver on Host Machine
