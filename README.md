@@ -666,3 +666,7 @@ bash: nvidia-smi: command not found
 $ helm ls -n default | awk '/gpu-operator/{print $1}'
 $ helm delete gpu-operator-1630661158 -n default 
 ```
+or
+```
+$ helm delete $(helm ls -n default | awk '/gpu-operator/{print $1}') -n default
+```
