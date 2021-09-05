@@ -243,7 +243,7 @@ REPOSITORY   TAG       IMAGE ID   CREATED   SIZE
 See also https://docs.nvidia.com/datacenter/cloud-native/kubernetes/install-k8s.html .
 ```
 $ sudo apt-get update \
-&& sudo apt-get install -y apt-transport-https curl
+&& sudo apt-get install -y apt-transport-https
 -----
 Hit:1 https://nvidia.github.io/libnvidia-container/stable/ubuntu18.04/amd64  InRelease
 Hit:2 https://nvidia.github.io/nvidia-container-runtime/stable/ubuntu18.04/amd64  InRelease
@@ -257,7 +257,6 @@ Reading package lists... Done
 Reading package lists... Done
 Building dependency tree       
 Reading state information... Done
-curl is already the newest version (7.68.0-1ubuntu2.6).
 apt-transport-https is already the newest version (2.0.6).
 The following package was automatically installed and is no longer required:
   libllvm11
